@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  vision-service:
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "${PORT:-9001}:9001"
+      - "${DEBUG_PORT:-5678}:5678"
+    environment:
+      - KAFKA_BROKERS=${KAFKA_BROKERS:-kafka:9092}
+      - REDIS_URL=${REDIS_URL:-redis:6379}
+      - VISION_DEBUG=${VISION_DEBUG:-false}
+    networks:
+      - digirobotics-network
+
+networks:
+  digirobotics-network:
+    external: true
